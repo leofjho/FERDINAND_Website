@@ -200,10 +200,10 @@ export default function Home() {
       </div>
 
       {/* Navigation - Fixed */}
-      <nav className="fixed top-0 left-0 right-0 z-20 flex items-center justify-between px-8 md:px-16 py-8 mix-blend-difference">
+      <nav className="fixed top-0 left-0 right-0 z-20 flex items-center justify-between px-6 md:px-16 py-6 md:py-8 mix-blend-difference">
         <Link
           href="/"
-          className="text-2xl font-light tracking-[0.3em] uppercase text-white"
+          className="text-xl md:text-2xl font-light tracking-[0.2em] md:tracking-[0.3em] uppercase text-white"
         >
           FERDINAND
         </Link>
@@ -218,7 +218,7 @@ export default function Home() {
             Contact
           </Link>
         </div>
-        <button className="md:hidden text-white">
+        <button className="md:hidden text-white p-2 -mr-2">
           <svg
             className="w-6 h-6"
             fill="none"
@@ -236,13 +236,13 @@ export default function Home() {
       </nav>
 
       {/* Scroll Indicator */}
-      <div className="fixed bottom-12 left-1/2 -translate-x-1/2 z-20 mix-blend-difference">
-        <div className="flex flex-col items-center gap-3 animate-bounce">
-          <span className="text-xs tracking-widest uppercase text-white/60">
+      <div className="fixed bottom-8 md:bottom-12 left-1/2 -translate-x-1/2 z-20 mix-blend-difference">
+        <div className="flex flex-col items-center gap-2 md:gap-3 animate-bounce">
+          <span className="text-[10px] md:text-xs tracking-widest uppercase text-white/60">
             Scroll
           </span>
           <svg
-            className="w-5 h-5 text-white/60"
+            className="w-4 h-4 md:w-5 md:h-5 text-white/60"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"

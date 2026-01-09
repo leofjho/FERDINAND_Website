@@ -45,30 +45,30 @@ export default function About() {
       >
         <Navigation />
 
-      <main className="pt-32 pb-24 px-8 md:px-16">
+      <main className="pt-24 md:pt-32 pb-16 md:pb-24 px-6 md:px-16">
         <div className="max-w-6xl mx-auto">
           <motion.h1
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="text-4xl md:text-6xl font-extralight tracking-tight mb-20"
+            className="text-3xl md:text-6xl font-extralight tracking-tight mb-12 md:mb-20"
           >
             About FERDINAND
           </motion.h1>
 
-          <div className="grid md:grid-cols-2 gap-16 mb-32">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 mb-16 md:mb-32">
             <motion.div
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.1 }}
             >
-              <h2 className="text-2xl font-light mb-6">Our Story</h2>
-              <p className="text-white/60 leading-relaxed mb-6">
+              <h2 className="text-xl md:text-2xl font-light mb-4 md:mb-6">Our Story</h2>
+              <p className="text-white/60 text-sm md:text-base leading-relaxed mb-4 md:mb-6">
                 We are a creative studio specializing in visual storytelling,
                 brand identity, and digital experiences. Our team brings
                 together diverse perspectives to create work that resonates.
               </p>
-              <p className="text-white/60 leading-relaxed">
+              <p className="text-white/60 text-sm md:text-base leading-relaxed">
                 Every project is an opportunity to push boundaries and craft
                 something meaningful. We believe in the power of design to
                 transform and inspire.
@@ -79,7 +79,7 @@ export default function About() {
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="aspect-square bg-white/5 rounded-lg"
+              className="aspect-square bg-white/5 rounded-lg order-first md:order-last"
             />
           </div>
 
@@ -87,10 +87,10 @@ export default function About() {
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.3 }}
-            className="mb-32"
+            className="mb-16 md:mb-32"
           >
-            <h2 className="text-2xl font-light mb-12">What We Do</h2>
-            <div className="grid md:grid-cols-3 gap-8">
+            <h2 className="text-xl md:text-2xl font-light mb-8 md:mb-12">What We Do</h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8">
               {[
                 {
                   title: "Brand Identity",
@@ -110,10 +110,10 @@ export default function About() {
               ].map((service, index) => (
                 <div
                   key={index}
-                  className="p-8 bg-white/5 rounded-lg hover:bg-white/10 transition-colors"
+                  className="p-6 md:p-8 bg-white/5 rounded-lg hover:bg-white/10 active:bg-white/10 transition-colors"
                 >
-                  <h3 className="text-xl font-light mb-4">{service.title}</h3>
-                  <p className="text-white/60 text-sm leading-relaxed">
+                  <h3 className="text-lg md:text-xl font-light mb-3 md:mb-4">{service.title}</h3>
+                  <p className="text-white/60 text-xs md:text-sm leading-relaxed">
                     {service.description}
                   </p>
                 </div>
@@ -123,12 +123,12 @@ export default function About() {
         </div>
       </main>
 
-      <footer className="border-t border-white/10 py-12 px-8 md:px-16">
-        <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8">
-          <div className="text-xl font-light tracking-[0.3em] uppercase">
+      <footer className="border-t border-white/10 py-8 md:py-12 px-6 md:px-16">
+        <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 md:gap-8">
+          <div className="text-lg md:text-xl font-light tracking-[0.2em] md:tracking-[0.3em] uppercase">
             FERDINAND
           </div>
-          <p className="text-sm text-white/40">
+          <p className="text-xs md:text-sm text-white/40 text-center">
             &copy; 2026 FERDINAND Studio. All rights reserved.
           </p>
         </div>

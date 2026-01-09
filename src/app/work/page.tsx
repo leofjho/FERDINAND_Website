@@ -54,13 +54,13 @@ export default function Work() {
       >
         <Navigation />
 
-      <main className="pt-32 pb-24 px-8 md:px-16">
+      <main className="pt-24 md:pt-32 pb-16 md:pb-24 px-6 md:px-16">
         <div className="max-w-6xl mx-auto">
           <motion.h1
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="text-4xl md:text-6xl font-extralight tracking-tight mb-6"
+            className="text-3xl md:text-6xl font-extralight tracking-tight mb-4 md:mb-6"
           >
             Selected Work
           </motion.h1>
@@ -68,13 +68,13 @@ export default function Work() {
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.1 }}
-            className="text-white/60 text-lg max-w-xl mb-20"
+            className="text-white/60 text-base md:text-lg max-w-xl mb-12 md:mb-20"
           >
             A curated selection of projects that showcase our approach to
             visual storytelling and brand building.
           </motion.p>
 
-          <div className="grid md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">
             {projects.map((project, index) => (
               <motion.div
                 key={index}
@@ -82,17 +82,18 @@ export default function Work() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.2 + index * 0.1 }}
                 whileHover={{ y: -8 }}
-                className="group relative aspect-[4/3] bg-white/5 rounded-lg overflow-hidden cursor-pointer"
+                whileTap={{ scale: 0.98 }}
+                className="group relative aspect-[4/3] bg-white/5 rounded-lg overflow-hidden cursor-pointer active:bg-white/10"
               >
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                <div className="absolute bottom-0 left-0 right-0 p-8">
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-500" />
+                <div className="absolute bottom-0 left-0 right-0 p-5 md:p-8">
                   <div className="flex items-center justify-between mb-2">
-                    <p className="text-xs tracking-widest uppercase text-white/60">
+                    <p className="text-[10px] md:text-xs tracking-widest uppercase text-white/60">
                       {project.category}
                     </p>
-                    <p className="text-xs text-white/40">{project.year}</p>
+                    <p className="text-[10px] md:text-xs text-white/40">{project.year}</p>
                   </div>
-                  <h3 className="text-2xl font-light">{project.title}</h3>
+                  <h3 className="text-xl md:text-2xl font-light">{project.title}</h3>
                 </div>
               </motion.div>
             ))}
@@ -100,12 +101,12 @@ export default function Work() {
         </div>
       </main>
 
-      <footer className="border-t border-white/10 py-12 px-8 md:px-16">
-        <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8">
-          <div className="text-xl font-light tracking-[0.3em] uppercase">
+      <footer className="border-t border-white/10 py-8 md:py-12 px-6 md:px-16">
+        <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 md:gap-8">
+          <div className="text-lg md:text-xl font-light tracking-[0.2em] md:tracking-[0.3em] uppercase">
             FERDINAND
           </div>
-          <p className="text-sm text-white/40">
+          <p className="text-xs md:text-sm text-white/40 text-center">
             &copy; 2026 FERDINAND Studio. All rights reserved.
           </p>
         </div>
