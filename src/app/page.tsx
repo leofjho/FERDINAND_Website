@@ -340,11 +340,8 @@ export default function Home() {
               key={img.id}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{
-                opacity: { duration: 0.3 },
-                exit: { duration: FADE_OUT_DURATION / 1000 },
-              }}
+              exit={{ opacity: 0, transition: { duration: FADE_OUT_DURATION / 1000 } }}
+              transition={{ opacity: { duration: 0.3 } }}
               style={{
                 position: "fixed",
                 left: `${img.x}px`,
