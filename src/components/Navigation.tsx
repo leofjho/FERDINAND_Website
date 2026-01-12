@@ -5,7 +5,11 @@ import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-export default function Navigation() {
+interface NavigationProps {
+  variant?: "default" | "home";
+}
+
+export default function Navigation({ variant = "default" }: NavigationProps) {
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -26,9 +30,13 @@ export default function Navigation() {
     };
   }, [isMenuOpen]);
 
+  const navClasses = variant === "home"
+    ? "fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 md:px-16 py-6 md:py-8 mix-blend-difference"
+    : "fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 md:px-16 py-6 md:py-8";
+
   return (
     <>
-      <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 md:px-16 py-6 md:py-8">
+      <nav className={navClasses}>
         <Link
           href="/"
           className="text-xl md:text-2xl font-light tracking-[0.2em] md:tracking-[0.3em] uppercase text-white"
@@ -66,7 +74,7 @@ export default function Navigation() {
 
         {/* Mobile Menu Button */}
         <button
-          className="md:hidden text-white p-2 -mr-2 tap-highlight-none"
+          className="md:hidden text-white p-2 -mr-2 relative z-[60]"
           onClick={() => setIsMenuOpen(!isMenuOpen)}
           aria-label={isMenuOpen ? "Close menu" : "Open menu"}
         >
@@ -103,7 +111,7 @@ export default function Navigation() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-40 bg-black/95 backdrop-blur-sm md:hidden"
+            className="fixed inset-0 z-[55] bg-[#0a0a0a] md:hidden"
           >
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -112,6 +120,15 @@ export default function Navigation() {
               transition={{ duration: 0.3, delay: 0.1 }}
               className="flex flex-col items-center justify-center h-full gap-8"
             >
+              <Link
+                href="/"
+                className={`text-3xl font-light tracking-wider transition-opacity ${
+                  pathname === "/" ? "text-white" : "text-white/60"
+                }`}
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Home
+              </Link>
               <Link
                 href="/work"
                 className={`text-3xl font-light tracking-wider transition-opacity ${
@@ -139,6 +156,15 @@ export default function Navigation() {
               >
                 Contact
               </Link>
+              <div className="mt-8 pt-8 border-t border-white/10">
+                <Link
+                  href="/impressum"
+                  className="text-sm text-white/40 tracking-wider"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  Impressum
+                </Link>
+              </div>
             </motion.div>
           </motion.div>
         )}

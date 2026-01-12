@@ -91,3 +91,48 @@ nav, button {
     padding-bottom: max(2rem, env(safe-area-inset-bottom));
   }
 }
+
+/* Hide horizontal scrollbar for gallery */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Locomotive Scroll smooth */
+html.has-scroll-smooth {
+  overflow: hidden;
+}
+
+html.has-scroll-smooth body {
+  overflow: hidden;
+}
+
+/* Custom cursor - hide system cursor on desktop */
+@media (min-width: 769px) {
+  *,
+  *::before,
+  *::after,
+  a,
+  a *,
+  button,
+  button *,
+  [role="button"],
+  [role="button"] *,
+  input,
+  textarea,
+  select,
+  label,
+  [onclick],
+  [tabindex] {
+    cursor: none !important;
+  }
+
+  html,
+  body {
+    cursor: none !important;
+  }
+}
