@@ -135,7 +135,7 @@ export default function Home() {
   const [touchEnd, setTouchEnd] = useState<number | null>(null);
   const [isDarkMode, setIsDarkMode] = useState(true);
   const [showWeiterPulse, setShowWeiterPulse] = useState(false);
-  const [scrollUnlocked, setScrollUnlocked] = useState(true); // Scroll immer aktiviert
+  const [scrollUnlocked, setScrollUnlocked] = useState(false); // Initially locked, unlocked after "Weiter" click
   const [globalHoveredProject, setGlobalHoveredProject] = useState<number | null>(null); // Für globale Kachel-Hover
 
   // Contact form state
@@ -214,6 +214,10 @@ export default function Home() {
       if (mobile && currentProjectIndex === null) {
         setCurrentProjectIndex(0);
       }
+      // On desktop, scroll is always unlocked
+      if (!mobile) {
+        setScrollUnlocked(true);
+      }
     };
     checkMobile();
     window.addEventListener("resize", checkMobile);
@@ -248,9 +252,11 @@ export default function Home() {
     }
   }, [scrollUnlocked]);
 
-  // Prevent scroll when menu is open, scroll not yet unlocked, or on mobile in hero section
+  // Prevent scroll when menu is open or scroll not yet unlocked (initial state on mobile)
   useEffect(() => {
-    const shouldPreventScroll = isMenuOpen || !scrollUnlocked || (isMobile && isInHeroSection);
+    // On mobile: block scroll until user clicks "Weiter" (scrollUnlocked becomes true)
+    // After that, scroll works normally everywhere including hero section
+    const shouldPreventScroll = isMenuOpen || (isMobile && !scrollUnlocked);
 
     const preventScroll = (e: Event) => {
       if (shouldPreventScroll) {
@@ -275,7 +281,7 @@ export default function Home() {
       window.removeEventListener("wheel", preventScroll);
       window.removeEventListener("touchmove", preventScroll);
     };
-  }, [isMenuOpen, scrollUnlocked, isMobile, isInHeroSection]);
+  }, [isMenuOpen, scrollUnlocked, isMobile]);
 
   // Track active section on scroll
   useEffect(() => {
