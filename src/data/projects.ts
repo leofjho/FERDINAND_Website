@@ -12,7 +12,7 @@ export const projects: Project[] = [
     },
     thumbnailVideo: {
       src: "/videos/projects/voumbii.mp4",
-      poster: "/images/project-section/5W9A9207.avif",
+      poster: "/images/projects/voumbii.jpg",
     },
     shortDescription: "Brand Identity & Visual Design",
     challenge: "Lorem ipsum dolor sit amet.",
@@ -39,7 +39,7 @@ export const projects: Project[] = [
       { value: 5, label: "Awards" },
     ],
     resultsDescription: "Lorem ipsum.",
-    nextProject: { slug: "event", title: "Event", category: "Event", thumbnail: { src: "/images/project-section/5W9A0006.avif", alt: "Event preview" } },
+    nextProject: { slug: "event", title: "Event", category: "Event", thumbnail: { src: "/images/projects/event_full.jpg", alt: "Event preview" } },
   },
   {
     slug: "event",
@@ -51,7 +51,7 @@ export const projects: Project[] = [
       alt: "Event",
     },
     thumbnailImage: {
-      src: "/images/project-section/5W9A0006.avif",
+      src: "/images/projects/event_tile.jpg",
       alt: "Event Kachel",
     },
     shortDescription: "Event Photography & Documentation",
@@ -79,7 +79,7 @@ export const projects: Project[] = [
       { value: 3, label: "Awards" },
     ],
     resultsDescription: "Lorem ipsum.",
-    nextProject: { slug: "website-shooting", title: "Website Shooting", category: "Photography", thumbnail: { src: "/images/project-section/5W9A3810.avif", alt: "Website Shooting preview" } },
+    nextProject: { slug: "website-shooting", title: "Website Shooting", category: "Photography", thumbnail: { src: "/images/projects/website_shooting.jpg", alt: "Website Shooting preview" } },
   },
   {
     slug: "website-shooting",
@@ -92,7 +92,7 @@ export const projects: Project[] = [
     },
     thumbnailVideo: {
       src: "/videos/projects/website_shooting.mp4",
-      poster: "/images/project-section/5W9A3810.avif",
+      poster: "/images/projects/website_shooting.jpg",
     },
     shortDescription: "Professional Photography for Web",
     challenge: "Lorem ipsum dolor sit amet.",
@@ -119,7 +119,7 @@ export const projects: Project[] = [
       { value: 2, label: "Awards" },
     ],
     resultsDescription: "Lorem ipsum.",
-    nextProject: { slug: "event2", title: "Event 2", category: "Event", thumbnail: { src: "/images/project-section/5W9A6486.avif", alt: "Event 2 preview" } },
+    nextProject: { slug: "event2", title: "Event 2", category: "Event", thumbnail: { src: "/images/projects/event2_full.jpg", alt: "Event 2 preview" } },
   },
   {
     slug: "event2",
@@ -131,7 +131,7 @@ export const projects: Project[] = [
       alt: "Event 2",
     },
     thumbnailImage: {
-      src: "/images/project-section/5W9A6486.avif",
+      src: "/images/projects/event2_tile.jpg",
       alt: "Event 2 Kachel",
     },
     shortDescription: "Event Photography & Coverage",
@@ -159,7 +159,7 @@ export const projects: Project[] = [
       { value: 2, label: "Awards" },
     ],
     resultsDescription: "Lorem ipsum.",
-    nextProject: { slug: "motorsport", title: "Motorsport", category: "Sports", thumbnail: { src: "/images/project-section/5W9A6806.avif", alt: "Motorsport preview" } },
+    nextProject: { slug: "motorsport", title: "Motorsport", category: "Sports", thumbnail: { src: "/images/projects/motorsport.jpg", alt: "Motorsport preview" } },
   },
   {
     slug: "motorsport",
@@ -172,7 +172,7 @@ export const projects: Project[] = [
     },
     thumbnailVideo: {
       src: "/videos/projects/motorsport.mp4",
-      poster: "/images/project-section/5W9A6806.avif",
+      poster: "/images/projects/motorsport.jpg",
     },
     shortDescription: "Motorsport Photography & Videography",
     challenge: "Lorem ipsum dolor sit amet.",
@@ -199,7 +199,7 @@ export const projects: Project[] = [
       { value: 4, label: "Awards" },
     ],
     resultsDescription: "Lorem ipsum.",
-    nextProject: { slug: "voumbii", title: "Voumbii", category: "Brand", thumbnail: { src: "/images/project-section/5W9A9207.avif", alt: "Voumbii preview" } },
+    nextProject: { slug: "voumbii", title: "Voumbii", category: "Brand", thumbnail: { src: "/images/projects/voumbii.jpg", alt: "Voumbii preview" } },
   },
 ];
 
@@ -211,6 +211,15 @@ export function getAllProjectSlugs(): string[] {
   return projects.map((p) => p.slug);
 }
 
+// Original tile images for the main page Work section
+const tileImages: Record<string, string> = {
+  voumbii: "/images/projects/voumbii.jpg",
+  event: "/images/projects/event_full.jpg",
+  "website-shooting": "/images/projects/website_shooting.jpg",
+  event2: "/images/projects/event2_full.jpg",
+  motorsport: "/images/projects/motorsport.jpg",
+};
+
 export function getProjectPreviews(): ProjectPreview[] {
   return projects.map(
     ({ slug, title, category, year, heroImage, thumbnailVideo, thumbnailImage, shortDescription }) => ({
@@ -218,8 +227,8 @@ export function getProjectPreviews(): ProjectPreview[] {
       title,
       category,
       year,
-      thumbnail: thumbnailImage || heroImage, // Kachel: separates Bild oder heroImage
-      fullImage: heroImage, // Vollbild: immer heroImage (Großbild)
+      thumbnail: thumbnailImage || { src: tileImages[slug], alt: title }, // Kachel: separates Bild
+      fullImage: { src: tileImages[slug], alt: title }, // Vollbild auf Hauptseite: Original-Bilder
       thumbnailVideo,
       shortDescription,
     })
