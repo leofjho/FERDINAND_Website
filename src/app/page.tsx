@@ -1010,7 +1010,7 @@ export default function Home() {
               className="absolute left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
               style={{
                 zIndex: 40,
-                bottom: isMobile ? "calc(env(safe-area-inset-bottom, 24px) + 80px)" : "48px"
+                bottom: isMobile ? "calc(env(safe-area-inset-bottom, 24px) + 20vh)" : "48px"
               }}
             >
               <button
