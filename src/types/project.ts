@@ -3,6 +3,11 @@ export interface ProjectImage {
   alt: string;
 }
 
+export interface ProjectVideo {
+  src: string;
+  poster?: string; // Fallback image
+}
+
 export interface ChallengePoint {
   title: string;
   description: string;
@@ -39,6 +44,8 @@ export interface Project {
   client?: string;
   technologies?: string[];
   heroImage: ProjectImage;
+  thumbnailVideo?: ProjectVideo; // Optional video for tile animation
+  thumbnailImage?: ProjectImage; // Optional separate image for tile (if different from heroImage)
   shortDescription: string;
   challenge: string;
   challengePoints: ChallengePoint[];
@@ -58,6 +65,8 @@ export interface ProjectPreview {
   title: string;
   category: string;
   year: string;
-  thumbnail: ProjectImage;
+  thumbnail: ProjectImage; // Für Kachel
+  fullImage: ProjectImage; // Für Vollbild
+  thumbnailVideo?: ProjectVideo;
   shortDescription: string;
 }

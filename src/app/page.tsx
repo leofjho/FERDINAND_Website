@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { getProjectPreviews } from "@/data/projects";
+import ImageWithSkeleton from "@/components/ImageWithSkeleton";
 
 // Generate image paths dynamically using AVIF format
 const generateImagePaths = () => {
@@ -1091,13 +1092,14 @@ export default function Home() {
                       className="relative w-full aspect-[3/4] overflow-hidden"
                     >
                       <Link href={`/work/${projects[currentProjectIndex ?? 0].slug}`}>
-                        <Image
+                        <ImageWithSkeleton
                           src={projects[currentProjectIndex ?? 0].fullImage.src}
                           alt={projects[currentProjectIndex ?? 0].title}
                           fill
                           className="object-cover"
+                          lightMode
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent z-10" />
                         <div className="absolute bottom-0 left-0 right-0 p-6">
                           <p className="text-xs tracking-widest uppercase text-white/60 mb-2">
                             {projects[currentProjectIndex ?? 0].category}
@@ -1145,13 +1147,14 @@ export default function Home() {
                       transition={{ duration: 0.8, delay: 0.1 }}
                       className="relative w-full md:w-[60%] aspect-[4/3] md:aspect-[16/10] overflow-hidden group"
                     >
-                      <Image
-                        src={projects[0]?.fullImage.src || "/images/projects/voumbii.jpg"}
+                      <ImageWithSkeleton
+                        src={projects[0]?.fullImage.src}
                         alt="Featured work"
                         fill
                         className="object-cover transition-transform duration-700 group-hover:scale-105"
+                        lightMode
                       />
-                      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-500" />
+                      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-500 z-10" />
                     </motion.div>
 
                     <motion.div
@@ -1161,13 +1164,14 @@ export default function Home() {
                       transition={{ duration: 0.8, delay: 0.2 }}
                       className="relative w-full md:w-[40%] aspect-[4/3] md:aspect-[3/4] overflow-hidden group md:-mt-12"
                     >
-                      <Image
-                        src={projects[1]?.fullImage.src || "/images/projects/event_full.jpg"}
+                      <ImageWithSkeleton
+                        src={projects[1]?.fullImage.src}
                         alt="Featured work"
                         fill
                         className="object-cover transition-transform duration-700 group-hover:scale-105"
+                        lightMode
                       />
-                      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-500" />
+                      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-500 z-10" />
                     </motion.div>
                   </div>
 
@@ -1180,13 +1184,14 @@ export default function Home() {
                       transition={{ duration: 0.8, delay: 0.15 }}
                       className="relative w-full md:w-[30%] aspect-[3/4] overflow-hidden group md:mt-8"
                     >
-                      <Image
-                        src={projects[2]?.fullImage.src || "/images/projects/website_shooting.jpg"}
+                      <ImageWithSkeleton
+                        src={projects[2]?.fullImage.src}
                         alt="Featured work"
                         fill
                         className="object-cover transition-transform duration-700 group-hover:scale-105"
+                        lightMode
                       />
-                      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-500" />
+                      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-500 z-10" />
                     </motion.div>
 
                     <motion.div
@@ -1196,13 +1201,14 @@ export default function Home() {
                       transition={{ duration: 0.8, delay: 0.25 }}
                       className="relative w-full md:w-[45%] aspect-[4/3] md:aspect-[16/9] overflow-hidden group md:-mt-16"
                     >
-                      <Image
-                        src={projects[3]?.fullImage.src || "/images/projects/event2_full.jpg"}
+                      <ImageWithSkeleton
+                        src={projects[3]?.fullImage.src}
                         alt="Featured work"
                         fill
                         className="object-cover transition-transform duration-700 group-hover:scale-105"
+                        lightMode
                       />
-                      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-500" />
+                      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-500 z-10" />
                     </motion.div>
 
                     <motion.div
@@ -1212,13 +1218,14 @@ export default function Home() {
                       transition={{ duration: 0.8, delay: 0.35 }}
                       className="relative w-full md:w-[25%] aspect-[3/4] md:aspect-[2/3] overflow-hidden group md:mt-24"
                     >
-                      <Image
-                        src={projects[4]?.fullImage.src || "/images/projects/motorsport.jpg"}
+                      <ImageWithSkeleton
+                        src={projects[4]?.fullImage.src}
                         alt="Featured work"
                         fill
                         className="object-cover transition-transform duration-700 group-hover:scale-105"
+                        lightMode
                       />
-                      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-500" />
+                      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-500 z-10" />
                     </motion.div>
                   </div>
                 </div>

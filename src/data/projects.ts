@@ -7,7 +7,7 @@ export const projects: Project[] = [
     category: "Brand",
     year: "2024",
     heroImage: {
-      src: "/images/project-section/5W9A9207.avif",
+      src: "/images/project-section/5W9A9207.webp",
       alt: "Voumbii",
     },
     thumbnailVideo: {
@@ -21,7 +21,7 @@ export const projects: Project[] = [
       { title: "Ipsum", description: "Dolor sit amet." },
       { title: "Dolor", description: "Consectetur adipiscing." },
     ],
-    showcaseImage: { src: "/images/project-section/5W9A9207.avif", alt: "Voumbii showcase" },
+    showcaseImage: { src: "/images/project-section/5W9A9207.webp", alt: "Voumbii showcase" },
     showcaseCaption: "Voumbii",
     solution: "Lorem ipsum dolor sit amet.",
     solutionFeatures: [
@@ -30,8 +30,8 @@ export const projects: Project[] = [
       { title: "Dolor", description: "Amet." },
       { title: "Sit", description: "Consectetur." },
     ],
-    solutionImage: { src: "/images/project-section/5W9A9207.avif", alt: "Voumbii solution" },
-    gallery: [{ src: "/images/project-section/5W9A9207.avif", alt: "Gallery 1" }],
+    solutionImage: { src: "/images/project-section/5W9A9207.webp", alt: "Voumbii solution" },
+    gallery: [{ src: "/images/project-section/5W9A9207.webp", alt: "Gallery 1" }],
     results: [
       { value: 1, suffix: "M", label: "Views" },
       { value: 100, suffix: "%", label: "Quality" },
@@ -47,7 +47,7 @@ export const projects: Project[] = [
     category: "Event",
     year: "2024",
     heroImage: {
-      src: "/images/project-section/5W9A0006.avif",
+      src: "/images/project-section/5W9A0006.webp",
       alt: "Event",
     },
     thumbnailImage: {
@@ -61,7 +61,7 @@ export const projects: Project[] = [
       { title: "Ipsum", description: "Dolor sit amet." },
       { title: "Dolor", description: "Consectetur adipiscing." },
     ],
-    showcaseImage: { src: "/images/project-section/5W9A0006.avif", alt: "Event showcase" },
+    showcaseImage: { src: "/images/project-section/5W9A0006.webp", alt: "Event showcase" },
     showcaseCaption: "Event",
     solution: "Lorem ipsum dolor sit amet.",
     solutionFeatures: [
@@ -70,8 +70,8 @@ export const projects: Project[] = [
       { title: "Dolor", description: "Amet." },
       { title: "Sit", description: "Consectetur." },
     ],
-    solutionImage: { src: "/images/project-section/5W9A0006.avif", alt: "Event solution" },
-    gallery: [{ src: "/images/project-section/5W9A0006.avif", alt: "Gallery 1" }],
+    solutionImage: { src: "/images/project-section/5W9A0006.webp", alt: "Event solution" },
+    gallery: [{ src: "/images/project-section/5W9A0006.webp", alt: "Gallery 1" }],
     results: [
       { value: 500, label: "Photos" },
       { value: 1, label: "Event" },
@@ -87,7 +87,7 @@ export const projects: Project[] = [
     category: "Photography",
     year: "2024",
     heroImage: {
-      src: "/images/project-section/5W9A3810.avif",
+      src: "/images/project-section/5W9A3810.webp",
       alt: "Website Shooting",
     },
     thumbnailVideo: {
@@ -101,7 +101,7 @@ export const projects: Project[] = [
       { title: "Ipsum", description: "Dolor sit amet." },
       { title: "Dolor", description: "Consectetur adipiscing." },
     ],
-    showcaseImage: { src: "/images/project-section/5W9A3810.avif", alt: "Website Shooting showcase" },
+    showcaseImage: { src: "/images/project-section/5W9A3810.webp", alt: "Website Shooting showcase" },
     showcaseCaption: "Website Shooting",
     solution: "Lorem ipsum dolor sit amet.",
     solutionFeatures: [
@@ -110,8 +110,8 @@ export const projects: Project[] = [
       { title: "Dolor", description: "Amet." },
       { title: "Sit", description: "Consectetur." },
     ],
-    solutionImage: { src: "/images/project-section/5W9A3810.avif", alt: "Website Shooting solution" },
-    gallery: [{ src: "/images/project-section/5W9A3810.avif", alt: "Gallery 1" }],
+    solutionImage: { src: "/images/project-section/5W9A3810.webp", alt: "Website Shooting solution" },
+    gallery: [{ src: "/images/project-section/5W9A3810.webp", alt: "Gallery 1" }],
     results: [
       { value: 200, label: "Photos" },
       { value: 50, label: "Edited" },
@@ -127,7 +127,7 @@ export const projects: Project[] = [
     category: "Event",
     year: "2024",
     heroImage: {
-      src: "/images/project-section/5W9A6486.avif",
+      src: "/images/project-section/5W9A6486.webp",
       alt: "Event 2",
     },
     thumbnailImage: {
@@ -141,7 +141,7 @@ export const projects: Project[] = [
       { title: "Ipsum", description: "Dolor sit amet." },
       { title: "Dolor", description: "Consectetur adipiscing." },
     ],
-    showcaseImage: { src: "/images/project-section/5W9A6486.avif", alt: "Event 2 showcase" },
+    showcaseImage: { src: "/images/project-section/5W9A6486.webp", alt: "Event 2 showcase" },
     showcaseCaption: "Event 2",
     solution: "Lorem ipsum dolor sit amet.",
     solutionFeatures: [
@@ -150,8 +150,8 @@ export const projects: Project[] = [
       { title: "Dolor", description: "Amet." },
       { title: "Sit", description: "Consectetur." },
     ],
-    solutionImage: { src: "/images/project-section/5W9A6486.avif", alt: "Event 2 solution" },
-    gallery: [{ src: "/images/project-section/5W9A6486.avif", alt: "Gallery 1" }],
+    solutionImage: { src: "/images/project-section/5W9A6486.webp", alt: "Event 2 solution" },
+    gallery: [{ src: "/images/project-section/5W9A6486.webp", alt: "Gallery 1" }],
     results: [
       { value: 300, label: "Photos" },
       { value: 1, label: "Event" },
@@ -167,7 +167,7 @@ export const projects: Project[] = [
     category: "Sports",
     year: "2024",
     heroImage: {
-      src: "/images/project-section/5W9A6806.avif",
+      src: "/images/project-section/5W9A6806.webp",
       alt: "Motorsport",
     },
     thumbnailVideo: {
@@ -181,7 +181,7 @@ export const projects: Project[] = [
       { title: "Ipsum", description: "Dolor sit amet." },
       { title: "Dolor", description: "Consectetur adipiscing." },
     ],
-    showcaseImage: { src: "/images/project-section/5W9A6806.avif", alt: "Motorsport showcase" },
+    showcaseImage: { src: "/images/project-section/5W9A6806.webp", alt: "Motorsport showcase" },
     showcaseCaption: "Motorsport",
     solution: "Lorem ipsum dolor sit amet.",
     solutionFeatures: [
@@ -190,8 +190,8 @@ export const projects: Project[] = [
       { title: "Dolor", description: "Amet." },
       { title: "Sit", description: "Consectetur." },
     ],
-    solutionImage: { src: "/images/project-section/5W9A6806.avif", alt: "Motorsport solution" },
-    gallery: [{ src: "/images/project-section/5W9A6806.avif", alt: "Gallery 1" }],
+    solutionImage: { src: "/images/project-section/5W9A6806.webp", alt: "Motorsport solution" },
+    gallery: [{ src: "/images/project-section/5W9A6806.webp", alt: "Gallery 1" }],
     results: [
       { value: 150, label: "Photos" },
       { value: 5, label: "Videos" },
@@ -211,15 +211,6 @@ export function getAllProjectSlugs(): string[] {
   return projects.map((p) => p.slug);
 }
 
-// Original tile images for the main page Work section
-const tileImages: Record<string, string> = {
-  voumbii: "/images/projects/voumbii.jpg",
-  event: "/images/projects/event_full.jpg",
-  "website-shooting": "/images/projects/website_shooting.jpg",
-  event2: "/images/projects/event2_full.jpg",
-  motorsport: "/images/projects/motorsport.jpg",
-};
-
 export function getProjectPreviews(): ProjectPreview[] {
   return projects.map(
     ({ slug, title, category, year, heroImage, thumbnailVideo, thumbnailImage, shortDescription }) => ({
@@ -227,8 +218,8 @@ export function getProjectPreviews(): ProjectPreview[] {
       title,
       category,
       year,
-      thumbnail: thumbnailImage || { src: tileImages[slug], alt: title }, // Kachel: separates Bild
-      fullImage: { src: tileImages[slug], alt: title }, // Vollbild auf Hauptseite: Original-Bilder
+      thumbnail: thumbnailImage || heroImage, // Kachel: separates Bild oder heroImage
+      fullImage: heroImage, // Vollbild: project-section Bilder
       thumbnailVideo,
       shortDescription,
     })

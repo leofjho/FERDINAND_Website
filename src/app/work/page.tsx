@@ -102,7 +102,7 @@ export default function Work() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6, delay: 0.2 + index * 0.1 }}
                     whileHover={{ y: -8 }}
-                    className={`group relative aspect-[4/3] ${isDarkMode ? "bg-white/5" : "bg-black/5"} rounded-lg overflow-hidden`}
+                    className={`group relative aspect-[4/3] ${isDarkMode ? "liquid-glass-input" : "liquid-glass-hover"} rounded-2xl overflow-hidden`}
                   >
                     {/* Project Thumbnail */}
                     <Image

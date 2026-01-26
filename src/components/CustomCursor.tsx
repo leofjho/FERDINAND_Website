@@ -4,13 +4,15 @@ import { useEffect, useRef, useState, useCallback } from "react";
 
 interface CustomCursorProps {
   isPinkBackground?: boolean;
+  variant?: "circle" | "square";
 }
 
-export default function CustomCursor({ isPinkBackground = false }: CustomCursorProps) {
+export default function CustomCursor({ isPinkBackground = false, variant = "circle" }: CustomCursorProps) {
   const [isMobile, setIsMobile] = useState(false);
   const [isHoveringClickable, setIsHoveringClickable] = useState(false);
 
-  const cursorRef = useRef<HTMLDivElement>(null);
+  const invertRef = useRef<HTMLDivElement>(null);
+  const glassRef = useRef<HTMLDivElement>(null);
   const mousePos = useRef({ x: 0, y: 0 });
   const rafId = useRef<number | null>(null);
 
@@ -29,8 +31,13 @@ export default function CustomCursor({ isPinkBackground = false }: CustomCursorP
 
   // Instant cursor update using requestAnimationFrame
   const updateCursor = useCallback(() => {
-    if (cursorRef.current) {
-      cursorRef.current.style.transform = `translate(${mousePos.current.x - 10}px, ${mousePos.current.y - 10}px)`;
+    const x = mousePos.current.x - 12;
+    const y = mousePos.current.y - 12;
+    if (invertRef.current) {
+      invertRef.current.style.transform = `translate(${x}px, ${y}px)`;
+    }
+    if (glassRef.current) {
+      glassRef.current.style.transform = `translate(${x}px, ${y}px)`;
     }
     rafId.current = requestAnimationFrame(updateCursor);
   }, []);
@@ -116,39 +123,87 @@ export default function CustomCursor({ isPinkBackground = false }: CustomCursorP
 
   if (isMobile) return null;
 
-  // Pink background: light blue cursor
-  // Other backgrounds: white with mix-blend-mode: difference
-  const cursorStyle = isPinkBackground
-    ? {
-        backgroundColor: "#87CEEB",
-      }
-    : {
-        backgroundColor: "white",
-        mixBlendMode: "difference" as const,
-      };
+  // Cursor size based on hover state
+  const size = isHoveringClickable ? 14 : 24;
+  const offset = isHoveringClickable ? 5 : 0;
+  const borderRadius = "6px";
+  const borderWidth = 3;
 
   return (
-    <div
-      ref={cursorRef}
-      style={{
-        position: "fixed",
-        top: 0,
-        left: 0,
-        width: "20px",
-        height: "20px",
-        pointerEvents: "none",
-        zIndex: 9999,
-        willChange: "transform",
-        transition:
-          "width 0.2s ease-out, height 0.2s ease-out, margin 0.2s ease-out, background-color 0.3s ease-out",
-        ...cursorStyle,
-        ...(isHoveringClickable && {
-          width: "10px",
-          height: "10px",
-          marginLeft: "5px",
-          marginTop: "5px",
-        }),
-      }}
-    />
+    <>
+      {/* Layer 1: Color inversion */}
+      <div
+        ref={invertRef}
+        style={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          width: `${size}px`,
+          height: `${size}px`,
+          marginLeft: `${offset}px`,
+          marginTop: `${offset}px`,
+          borderRadius,
+          backgroundColor: "white",
+          mixBlendMode: "difference",
+          pointerEvents: "none",
+          zIndex: 9998,
+          willChange: "transform",
+          transition: "width 0.2s ease-out, height 0.2s ease-out, margin 0.2s ease-out",
+        }}
+      />
+      {/* Layer 2: Glass effect */}
+      <div
+        ref={glassRef}
+        style={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          width: `${size}px`,
+          height: `${size}px`,
+          marginLeft: `${offset}px`,
+          marginTop: `${offset}px`,
+          pointerEvents: "none",
+          zIndex: 9999,
+          willChange: "transform",
+          transition: "width 0.2s ease-out, height 0.2s ease-out, margin 0.2s ease-out",
+        }}
+      >
+        {variant === "square" ? (
+          /* Thin glass border for square variant - no blur inside */
+          <div
+            style={{
+              position: "absolute",
+              inset: 0,
+              borderRadius: "6px",
+              backgroundColor: "transparent",
+              border: "1px solid rgba(255, 255, 255, 0.2)",
+              boxShadow: "0 0 8px rgba(255, 255, 255, 0.1), inset 0 0 1px rgba(255, 255, 255, 0.1)",
+            }}
+          />
+        ) : (
+          /* Full glass overlay for circle variant */
+          <div
+            style={{
+              position: "absolute",
+              inset: 0,
+              borderRadius: "50%",
+              backgroundColor: isPinkBackground
+                ? "rgba(135, 206, 235, 0.15)"
+                : "rgba(255, 255, 255, 0.08)",
+              backdropFilter: "blur(8px) saturate(140%)",
+              WebkitBackdropFilter: "blur(8px) saturate(140%)",
+              border: isPinkBackground
+                ? "1px solid rgba(135, 206, 235, 0.3)"
+                : "1px solid rgba(255, 255, 255, 0.15)",
+              boxShadow: `
+                inset 0 1px 1px rgba(255, 255, 255, 0.2),
+                inset 0 -1px 1px rgba(0, 0, 0, 0.05),
+                0 2px 8px rgba(0, 0, 0, 0.08)
+              `,
+            }}
+          />
+        )}
+      </div>
+    </>
   );
 }

@@ -1,228 +1,188 @@
 "use client";
 
-import { motion } from "framer-motion";
-import Navigation from "@/components/Navigation";
-import CustomCursor from "@/components/CustomCursor";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
+import CustomCursor from "@/components/CustomCursor";
 
-export default function Impressum() {
-  const [transitionActive, setTransitionActive] = useState(false);
-  const [isDarkMode, setIsDarkMode] = useState(true);
-
-  // Detect system color scheme
-  useEffect(() => {
-    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
-    setIsDarkMode(mediaQuery.matches);
-
-    const handleChange = (e: MediaQueryListEvent) => {
-      setIsDarkMode(e.matches);
-    };
-
-    mediaQuery.addEventListener("change", handleChange);
-    return () => mediaQuery.removeEventListener("change", handleChange);
-  }, []);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setTransitionActive(true);
-    }, 50);
-
-    return () => clearTimeout(timer);
-  }, []);
-
-  // Background color based on system preference
-  const backgroundColor = isDarkMode ? "#0a0a0a" : "#ffffff";
-  const textColor = isDarkMode ? "text-white" : "text-black";
-  const textMutedColor = isDarkMode ? "text-white/60" : "text-black/60";
-  const textFadedColor = isDarkMode ? "text-white/40" : "text-black/40";
-  const textSubtleColor = isDarkMode ? "text-white/80" : "text-black/80";
-  const borderColor = isDarkMode ? "border-white/10" : "border-black/10";
-
+export default function ImpressumPage() {
   return (
-    <div className="min-h-screen relative" style={{ cursor: "none" }}>
-      <CustomCursor isPinkBackground={!transitionActive} />
-      {/* Pink Background */}
-      <div
-        className="fixed inset-0 z-0 transition-opacity duration-[2500ms] ease-in-out"
-        style={{
-          background:
-            "linear-gradient(180deg, #ff69b4 0%, #ff8cc8 50%, rgba(255, 180, 224, 0.8) 100%)",
-          opacity: transitionActive ? 0 : 1,
-        }}
-      />
-
-      {/* Final Background - fades in (dark or light based on system preference) */}
-      <div
-        className="fixed inset-0 z-0 transition-opacity duration-[2500ms] ease-in-out"
-        style={{
-          background: backgroundColor,
-          opacity: transitionActive ? 1 : 0,
-        }}
-      />
+    <div className="min-h-screen bg-white text-black cursor-none">
+      <CustomCursor isPinkBackground={false} variant="square" />
+      {/* Navigation */}
+      <nav className="fixed top-0 left-0 right-0 flex justify-between items-center px-6 md:px-12 py-6 z-50 bg-white">
+        <Link
+          href="/"
+          className="text-xl md:text-2xl font-light tracking-[0.2em] md:tracking-[0.3em] uppercase text-black hover:opacity-70 transition-opacity"
+        >
+          FERDINAND
+        </Link>
+        <Link
+          href="/"
+          className="text-sm tracking-wider text-black/60 hover:text-black transition-colors"
+        >
+          Zurück
+        </Link>
+      </nav>
 
       {/* Content */}
-      <div
-        className={`relative z-10 min-h-screen transition-colors duration-[2500ms] ease-in-out ${textColor}`}
-        style={{
-          backgroundColor: transitionActive ? backgroundColor : "transparent",
-        }}
-      >
-        <Navigation />
+      <main className="max-w-3xl mx-auto px-6 md:px-12 pt-32 pb-20">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+        >
+          <h1 className="text-4xl md:text-5xl font-light tracking-wide mb-16">
+            Impressum
+          </h1>
 
-        <main className="pt-24 md:pt-32 pb-16 md:pb-24 px-6 md:px-16">
-          <div className="max-w-3xl mx-auto">
-            <motion.h1
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              className="text-3xl md:text-6xl font-extralight tracking-tight mb-12 md:mb-16"
-            >
-              Impressum
-            </motion.h1>
+          <div className="space-y-12 text-black/80">
+            {/* Angaben gemäß § 5 TMG */}
+            <section>
+              <h2 className="text-lg font-medium tracking-wide mb-4 text-black">
+                Angaben gemäß § 5 TMG
+              </h2>
+              <p className="leading-relaxed">
+                Ferdinand Mustermann<br />
+                FERDINAND Studio<br />
+                Musterstraße 123<br />
+                12345 Musterstadt
+              </p>
+            </section>
 
-            <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.1 }}
-              className="space-y-8 md:space-y-12"
-            >
-              {/* Angaben gemaess 5 TMG */}
-              <section>
-                <h2 className="text-lg md:text-xl font-light mb-4">
-                  Angaben gemaeae 5 TMG
-                </h2>
-                <div className={`${textMutedColor} text-sm md:text-base leading-relaxed space-y-1`}>
-                  <p>FERDINAND Studio</p>
-                  <p>Musterstrasse 123</p>
-                  <p>12345 Musterstadt</p>
-                  <p>Deutschland</p>
-                </div>
-              </section>
+            {/* Kontakt */}
+            <section>
+              <h2 className="text-lg font-medium tracking-wide mb-4 text-black">
+                Kontakt
+              </h2>
+              <p className="leading-relaxed">
+                Telefon: +49 (0) 123 456789<br />
+                E-Mail: info@ferdinand-studio.de
+              </p>
+            </section>
 
-              {/* Kontakt */}
-              <section>
-                <h2 className="text-lg md:text-xl font-light mb-4">Kontakt</h2>
-                <div className={`${textMutedColor} text-sm md:text-base leading-relaxed space-y-1`}>
-                  <p>Telefon: +49 (0) 123 456789</p>
-                  <p>E-Mail: hello@ferdinand.studio</p>
-                </div>
-              </section>
+            {/* Umsatzsteuer-ID */}
+            <section>
+              <h2 className="text-lg font-medium tracking-wide mb-4 text-black">
+                Umsatzsteuer-ID
+              </h2>
+              <p className="leading-relaxed">
+                Umsatzsteuer-Identifikationsnummer gemäß § 27 a Umsatzsteuergesetz:<br />
+                DE 123 456 789
+              </p>
+            </section>
 
-              {/* Verantwortlich fuer den Inhalt */}
-              <section>
-                <h2 className="text-lg md:text-xl font-light mb-4">
-                  Verantwortlich fuer den Inhalt nach 55 Abs. 2 RStV
-                </h2>
-                <div className={`${textMutedColor} text-sm md:text-base leading-relaxed space-y-1`}>
-                  <p>Max Mustermann</p>
-                  <p>Musterstrasse 123</p>
-                  <p>12345 Musterstadt</p>
-                </div>
-              </section>
+            {/* Verantwortlich für den Inhalt */}
+            <section>
+              <h2 className="text-lg font-medium tracking-wide mb-4 text-black">
+                Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV
+              </h2>
+              <p className="leading-relaxed">
+                Ferdinand Mustermann<br />
+                Musterstraße 123<br />
+                12345 Musterstadt
+              </p>
+            </section>
 
-              {/* Haftungsausschluss */}
-              <section>
-                <h2 className="text-lg md:text-xl font-light mb-4">
-                  Haftungsausschluss
-                </h2>
-                <div className={`${textMutedColor} text-sm md:text-base leading-relaxed space-y-4`}>
-                  <div>
-                    <h3 className={`${textSubtleColor} font-medium mb-2`}>
-                      Haftung fuer Inhalte
-                    </h3>
-                    <p>
-                      Die Inhalte unserer Seiten wurden mit groesster Sorgfalt
-                      erstellt. Fuer die Richtigkeit, Vollstaendigkeit und
-                      Aktualitaet der Inhalte koennen wir jedoch keine Gewaehr
-                      uebernehmen.
-                    </p>
-                  </div>
-                  <div>
-                    <h3 className={`${textSubtleColor} font-medium mb-2`}>
-                      Haftung fuer Links
-                    </h3>
-                    <p>
-                      Unser Angebot enthaelt Links zu externen Webseiten
-                      Dritter, auf deren Inhalte wir keinen Einfluss haben.
-                      Deshalb koennen wir fuer diese fremden Inhalte auch keine
-                      Gewaehr uebernehmen.
-                    </p>
-                  </div>
-                </div>
-              </section>
-
-              {/* Urheberrecht */}
-              <section>
-                <h2 className="text-lg md:text-xl font-light mb-4">
-                  Urheberrecht
-                </h2>
-                <p className={`${textMutedColor} text-sm md:text-base leading-relaxed`}>
-                  Die durch die Seitenbetreiber erstellten Inhalte und Werke auf
-                  diesen Seiten unterliegen dem deutschen Urheberrecht. Die
-                  Vervielfaeltigung, Bearbeitung, Verbreitung und jede Art der
-                  Verwertung ausserhalb der Grenzen des Urheberrechtes
-                  beduerfen der schriftlichen Zustimmung des jeweiligen Autors
-                  bzw. Erstellers.
-                </p>
-              </section>
-
-              {/* Datenschutz */}
-              <section>
-                <h2 className="text-lg md:text-xl font-light mb-4">
-                  Datenschutz
-                </h2>
-                <p className={`${textMutedColor} text-sm md:text-base leading-relaxed`}>
-                  Die Nutzung unserer Webseite ist in der Regel ohne Angabe
-                  personenbezogener Daten moeglich. Soweit auf unseren Seiten
-                  personenbezogene Daten erhoben werden, erfolgt dies stets auf
-                  freiwilliger Basis. Diese Daten werden ohne Ihre
-                  ausdrueckliche Zustimmung nicht an Dritte weitergegeben.
-                </p>
-              </section>
-            </motion.div>
-
-            {/* Back Link */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.8, delay: 0.3 }}
-              className="mt-12 md:mt-16"
-            >
-              <Link
-                href="/"
-                className={`inline-flex items-center gap-2 text-sm ${textFadedColor} hover:opacity-80 transition-colors`}
-              >
-                <svg
-                  className="w-4 h-4"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
+            {/* Streitschlichtung */}
+            <section>
+              <h2 className="text-lg font-medium tracking-wide mb-4 text-black">
+                EU-Streitschlichtung
+              </h2>
+              <p className="leading-relaxed">
+                Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit:{" "}
+                <a
+                  href="https://ec.europa.eu/consumers/odr/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="underline hover:opacity-70 transition-opacity"
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={1.5}
-                    d="M10 19l-7-7m0 0l7-7m-7 7h18"
-                  />
-                </svg>
-                Zurueck zur Startseite
-              </Link>
-            </motion.div>
-          </div>
-        </main>
+                  https://ec.europa.eu/consumers/odr/
+                </a>
+                <br />
+                Unsere E-Mail-Adresse finden Sie oben im Impressum.
+              </p>
+            </section>
 
-        <footer className={`${borderColor} border-t py-8 md:py-12 px-6 md:px-16`}>
-          <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 md:gap-8">
-            <div className="text-lg md:text-xl font-light tracking-[0.2em] md:tracking-[0.3em] uppercase">
-              FERDINAND
-            </div>
-            <p className={`text-xs md:text-sm ${textFadedColor} text-center`}>
-              &copy; 2026 FERDINAND Studio. All rights reserved.
-            </p>
+            {/* Verbraucherstreitbeilegung */}
+            <section>
+              <h2 className="text-lg font-medium tracking-wide mb-4 text-black">
+                Verbraucherstreitbeilegung/Universalschlichtungsstelle
+              </h2>
+              <p className="leading-relaxed">
+                Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer
+                Verbraucherschlichtungsstelle teilzunehmen.
+              </p>
+            </section>
+
+            {/* Haftung für Inhalte */}
+            <section>
+              <h2 className="text-lg font-medium tracking-wide mb-4 text-black">
+                Haftung für Inhalte
+              </h2>
+              <p className="leading-relaxed">
+                Als Diensteanbieter sind wir gemäß § 7 Abs.1 TMG für eigene Inhalte auf diesen Seiten nach den
+                allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 TMG sind wir als Diensteanbieter jedoch nicht
+                verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen oder nach Umständen zu
+                forschen, die auf eine rechtswidrige Tätigkeit hinweisen.
+              </p>
+              <p className="leading-relaxed mt-4">
+                Verpflichtungen zur Entfernung oder Sperrung der Nutzung von Informationen nach den allgemeinen
+                Gesetzen bleiben hiervon unberührt. Eine diesbezügliche Haftung ist jedoch erst ab dem Zeitpunkt der
+                Kenntnis einer konkreten Rechtsverletzung möglich. Bei Bekanntwerden von entsprechenden
+                Rechtsverletzungen werden wir diese Inhalte umgehend entfernen.
+              </p>
+            </section>
+
+            {/* Haftung für Links */}
+            <section>
+              <h2 className="text-lg font-medium tracking-wide mb-4 text-black">
+                Haftung für Links
+              </h2>
+              <p className="leading-relaxed">
+                Unser Angebot enthält Links zu externen Websites Dritter, auf deren Inhalte wir keinen Einfluss haben.
+                Deshalb können wir für diese fremden Inhalte auch keine Gewähr übernehmen. Für die Inhalte der
+                verlinkten Seiten ist stets der jeweilige Anbieter oder Betreiber der Seiten verantwortlich. Die
+                verlinkten Seiten wurden zum Zeitpunkt der Verlinkung auf mögliche Rechtsverstöße überprüft.
+                Rechtswidrige Inhalte waren zum Zeitpunkt der Verlinkung nicht erkennbar.
+              </p>
+              <p className="leading-relaxed mt-4">
+                Eine permanente inhaltliche Kontrolle der verlinkten Seiten ist jedoch ohne konkrete Anhaltspunkte
+                einer Rechtsverletzung nicht zumutbar. Bei Bekanntwerden von Rechtsverletzungen werden wir derartige
+                Links umgehend entfernen.
+              </p>
+            </section>
+
+            {/* Urheberrecht */}
+            <section>
+              <h2 className="text-lg font-medium tracking-wide mb-4 text-black">
+                Urheberrecht
+              </h2>
+              <p className="leading-relaxed">
+                Die durch die Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen
+                Urheberrecht. Die Vervielfältigung, Bearbeitung, Verbreitung und jede Art der Verwertung außerhalb der
+                Grenzen des Urheberrechtes bedürfen der schriftlichen Zustimmung des jeweiligen Autors bzw. Erstellers.
+                Downloads und Kopien dieser Seite sind nur für den privaten, nicht kommerziellen Gebrauch gestattet.
+              </p>
+              <p className="leading-relaxed mt-4">
+                Soweit die Inhalte auf dieser Seite nicht vom Betreiber erstellt wurden, werden die Urheberrechte
+                Dritter beachtet. Insbesondere werden Inhalte Dritter als solche gekennzeichnet. Sollten Sie trotzdem
+                auf eine Urheberrechtsverletzung aufmerksam werden, bitten wir um einen entsprechenden Hinweis. Bei
+                Bekanntwerden von Rechtsverletzungen werden wir derartige Inhalte umgehend entfernen.
+              </p>
+            </section>
           </div>
-        </footer>
-      </div>
+        </motion.div>
+      </main>
+
+      {/* Footer */}
+      <footer className="border-t border-black/10 py-8 px-6 md:px-12">
+        <div className="max-w-3xl mx-auto flex justify-between items-center text-sm text-black/50">
+          <Link href="/" className="hover:text-black transition-colors">
+            Zurück zur Startseite
+          </Link>
+          <p>&copy; 2025 FERDINAND Studio</p>
+        </div>
+      </footer>
     </div>
   );
 }
