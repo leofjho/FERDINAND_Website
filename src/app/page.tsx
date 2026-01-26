@@ -548,11 +548,12 @@ export default function Home() {
     [NAV_SAFE_MARGIN]
   );
 
-  // Check if cursor is inside the "Weiter" button no-spawn zone (when scroll locked)
+  // Check if cursor is inside the "Weiter" button no-spawn zone
   const isInWeiterButtonZone = useCallback(
     (x: number, y: number): boolean => {
-      // Only check when scroll is locked and button is visible
-      if (scrollUnlocked || !weiterButtonRef.current) return false;
+      // Check when button is visible (always on mobile, or when scroll locked on desktop)
+      const buttonVisible = isMobile || !scrollUnlocked;
+      if (!buttonVisible || !weiterButtonRef.current) return false;
 
       const buttonRect = weiterButtonRef.current.getBoundingClientRect();
 
@@ -568,7 +569,7 @@ export default function Home() {
         y <= expandedBottom
       );
     },
-    [scrollUnlocked, WEITER_BUTTON_MARGIN]
+    [isMobile, scrollUnlocked, WEITER_BUTTON_MARGIN]
   );
 
   // Spawn image at position (shared logic for mouse and touch)
