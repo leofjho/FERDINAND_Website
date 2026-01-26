@@ -707,7 +707,7 @@ export default function Home() {
       <nav
         ref={navRef}
         className="fixed top-0 left-0 right-0 px-6 md:px-16 py-6 md:py-8 flex items-center justify-between"
-        style={{ zIndex: 100 }}
+        style={{ zIndex: 150 }}
       >
         {/* Logo - hidden on hero, visible from work section onwards */}
         {/* Color adapts: black on white bg (work section without project), white on dark bg */}
@@ -770,8 +770,10 @@ export default function Home() {
               ? "text-black"
               : "text-white"
           }`}
-          style={{ position: "relative", zIndex: 101, minHeight: '44px', minWidth: '44px' }}
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
+          style={{ position: "relative", zIndex: 201, minHeight: '44px', minWidth: '44px' }}
+          onClick={() => {
+            setIsMenuOpen(!isMenuOpen);
+          }}
           aria-label={isMenuOpen ? "Close menu" : "Open menu"}
         >
           <svg
@@ -875,7 +877,7 @@ export default function Home() {
         <section
           ref={heroRef}
           id="home"
-          className={`w-full relative ${isMobile ? "touch-none" : ""}`}
+          className="w-full relative"
           style={{
             // Mobile: use dynamic viewport height for better mobile browser support
             minHeight: isMobile ? "100dvh" : "100vh",
@@ -984,12 +986,12 @@ export default function Home() {
             </h1>
           </div>
 
-          {/* Weiter Button - shown when scroll is locked, for both mobile and desktop */}
-          {!scrollUnlocked && (
+          {/* Weiter Button - always visible on mobile, conditional on desktop */}
+          {(isMobile || !scrollUnlocked) && (
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ delay: 2, duration: 0.8 }}
+              transition={{ delay: 1, duration: 0.8 }}
               className="absolute left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
               style={{
                 zIndex: 40,
