@@ -248,15 +248,17 @@ export default function Home() {
     }
   }, [scrollUnlocked]);
 
-  // Prevent scroll when menu is open OR scroll not yet unlocked (both mobile and desktop)
+  // Prevent scroll when menu is open, scroll not yet unlocked, or on mobile in hero section
   useEffect(() => {
+    const shouldPreventScroll = isMenuOpen || !scrollUnlocked || (isMobile && isInHeroSection);
+
     const preventScroll = (e: Event) => {
-      if (!scrollUnlocked || isMenuOpen) {
+      if (shouldPreventScroll) {
         e.preventDefault();
       }
     };
 
-    if (isMenuOpen || !scrollUnlocked) {
+    if (shouldPreventScroll) {
       document.body.style.overflow = "hidden";
       document.documentElement.style.overflow = "hidden";
       // Block wheel and touch scroll events
@@ -273,7 +275,7 @@ export default function Home() {
       window.removeEventListener("wheel", preventScroll);
       window.removeEventListener("touchmove", preventScroll);
     };
-  }, [isMenuOpen, scrollUnlocked]);
+  }, [isMenuOpen, scrollUnlocked, isMobile, isInHeroSection]);
 
   // Track active section on scroll
   useEffect(() => {
@@ -880,9 +882,9 @@ export default function Home() {
           id="home"
           className="w-full relative"
           style={{
-            // Mobile: use dynamic viewport height for better mobile browser support
-            minHeight: isMobile ? "100dvh" : "100vh",
-            height: isMobile ? "100dvh" : "100vh",
+            // Mobile: 110% of viewport height, Desktop: exactly viewport height
+            minHeight: isMobile ? "110dvh" : "100vh",
+            height: isMobile ? "110dvh" : "100vh",
             overflow: "visible",
           }}
           onTouchStart={handleHeroTouchStart}
