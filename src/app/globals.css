@@ -16,6 +16,8 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
+  overscroll-behavior-y: none; /* Verhindert Pull-to-Refresh */
+  overscroll-behavior-x: none; /* Verhindert horizontales Overscroll */
 }
 
 /* Custom scrollbar */
@@ -62,6 +64,37 @@ html {
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
+
+  /* Prevent iOS zoom on input focus - requires 16px minimum */
+  input, textarea, select {
+    font-size: 16px !important;
+  }
+
+  /* Touch Feedback for buttons and links */
+  button:active, a:active {
+    opacity: 0.7;
+    transform: scale(0.98);
+  }
+
+  /* Focus states for accessibility */
+  button:focus-visible,
+  a:focus-visible {
+    outline: 2px solid white;
+    outline-offset: 4px;
+    border-radius: 4px;
+  }
+
+  /* Entferne Standard-Browser-Outline */
+  button:focus:not(:focus-visible),
+  a:focus:not(:focus-visible) {
+    outline: none;
+  }
+
+  /* Mobile Liquid Glass - reduced blur for performance */
+  .liquid-glass-hover {
+    backdrop-filter: blur(20px) saturate(130%);
+    -webkit-backdrop-filter: blur(20px) saturate(130%);
+  }
 }
 
 /* Remove tap highlight on mobile */
@@ -82,13 +115,25 @@ nav, button {
 
 /* Safe area insets for notched devices */
 @supports (padding: max(0px)) {
-  body {
-    padding-left: max(0px, env(safe-area-inset-left));
-    padding-right: max(0px, env(safe-area-inset-right));
-  }
-
   footer {
     padding-bottom: max(2rem, env(safe-area-inset-bottom));
+  }
+}
+
+/* Pink background for mobile, transparent for desktop */
+html {
+  background: #ff69b4;
+  overflow-x: hidden;
+}
+
+body {
+  overflow-x: hidden;
+  background: #ff69b4; /* Fallback für Mobile */
+}
+
+@media (min-width: 769px) {
+  body {
+    background: transparent; /* Desktop nutzt normalen Gradient */
   }
 }
 
@@ -109,6 +154,20 @@ html.has-scroll-smooth {
 
 html.has-scroll-smooth body {
   overflow: hidden;
+}
+
+/* Pulse animation for Weiter button */
+@keyframes pulse-button {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+.pulse-after-delay {
+  animation: pulse-button 2s ease-in-out infinite;
 }
 
 /* Custom cursor - hide system cursor on desktop */
@@ -135,4 +194,445 @@ html.has-scroll-smooth body {
   body {
     cursor: none !important;
   }
+}
+
+/* ============================================
+   LIQUID GLASS - MIT FAKE REFRACTION
+   Verwendet animierte Gradients für Verzerrungsillusion
+   ============================================ */
+
+@keyframes liquid-shimmer {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes edge-refraction {
+  0% {
+    filter: hue-rotate(0deg);
+  }
+  100% {
+    filter: hue-rotate(360deg);
+  }
+}
+
+/* Liquid Glass Base */
+.liquid-glass {
+  position: relative;
+  isolation: isolate;
+  overflow: visible;
+
+  /* Glasige Hintergrundfarbe mit Shimmer */
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.18) 0%,
+      rgba(255, 255, 255, 0.08) 25%,
+      rgba(255, 255, 255, 0.15) 50%,
+      rgba(255, 255, 255, 0.05) 75%,
+      rgba(255, 255, 255, 0.12) 100%
+    );
+  background-size: 200% 200%;
+  animation: liquid-shimmer 8s ease-in-out infinite;
+
+  /* Hauptblur */
+  backdrop-filter: blur(40px) saturate(180%) brightness(1.1);
+  -webkit-backdrop-filter: blur(40px) saturate(180%) brightness(1.1);
+
+  /* Glas-Kante - einfacher Rand, Prisma-Effekt kommt von ::before */
+  border: 1px solid rgba(255, 255, 255, 0.25);
+
+  /* Schatten */
+  box-shadow:
+    inset 0 1px 2px rgba(255, 255, 255, 0.4),
+    inset 0 -1px 2px rgba(0, 0, 0, 0.1),
+    0 0 40px rgba(255, 255, 255, 0.1),
+    0 8px 32px rgba(0, 0, 0, 0.15),
+    0 30px 60px rgba(0, 0, 0, 0.1);
+
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* REFRACTION EDGE - Prisma-Effekt an den Kanten */
+.liquid-glass::before {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border-radius: inherit;
+  padding: 3px;
+
+  /* Prisma/Regenbogen Gradient - simuliert Lichtbrechung */
+  background: linear-gradient(
+    135deg,
+    rgba(255, 100, 100, 0.4) 0%,
+    rgba(255, 200, 100, 0.3) 15%,
+    rgba(200, 255, 100, 0.3) 30%,
+    rgba(100, 255, 200, 0.3) 45%,
+    rgba(100, 200, 255, 0.4) 60%,
+    rgba(200, 100, 255, 0.3) 75%,
+    rgba(255, 100, 200, 0.3) 90%,
+    rgba(255, 100, 100, 0.4) 100%
+  );
+  background-size: 300% 300%;
+  animation: liquid-shimmer 4s ease-in-out infinite;
+
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+
+  opacity: 0.6;
+  filter: blur(2px);
+  pointer-events: none;
+  z-index: -1;
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Innerer Glanz */
+.liquid-glass::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 50%;
+  border-radius: inherit;
+  border-bottom-left-radius: 100% 30px;
+  border-bottom-right-radius: 100% 30px;
+
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.25) 0%,
+    rgba(255, 255, 255, 0.08) 40%,
+    transparent 100%
+  );
+
+  pointer-events: none;
+  z-index: 1;
+}
+
+.liquid-glass > * {
+  position: relative;
+  z-index: 2;
+}
+
+/* Hover - Verstärkter Effekt */
+.liquid-glass:hover {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.25) 0%,
+      rgba(255, 255, 255, 0.12) 25%,
+      rgba(255, 255, 255, 0.2) 50%,
+      rgba(255, 255, 255, 0.08) 75%,
+      rgba(255, 255, 255, 0.18) 100%
+    );
+  background-size: 200% 200%;
+
+  backdrop-filter: blur(50px) saturate(200%) brightness(1.15);
+  -webkit-backdrop-filter: blur(50px) saturate(200%) brightness(1.15);
+
+  box-shadow:
+    inset 0 1px 3px rgba(255, 255, 255, 0.5),
+    inset 0 -1px 2px rgba(0, 0, 0, 0.08),
+    0 0 60px rgba(255, 255, 255, 0.15),
+    0 10px 40px rgba(0, 0, 0, 0.2),
+    0 40px 80px rgba(0, 0, 0, 0.15);
+
+  transform: translateY(-2px) scale(1.01);
+}
+
+/* Hover: Stärkere Refraction */
+.liquid-glass:hover::before {
+  inset: -5px;
+  padding: 5px;
+  opacity: 0.8;
+  filter: blur(3px);
+  animation: liquid-shimmer 2s ease-in-out infinite;
+}
+
+.liquid-glass:hover::after {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.35) 0%,
+    rgba(255, 255, 255, 0.1) 40%,
+    transparent 100%
+  );
+}
+
+.liquid-glass:active {
+  transform: scale(0.98);
+  transition: all 0.1s cubic-bezier(0.42, 0, 1, 1);
+}
+
+/* ============================================
+   HOVER-ONLY VARIANTS - Transparent → Glass on Hover
+   ============================================ */
+
+.liquid-glass-hover {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  /* Sehr subtiler Default-Zustand */
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(12px) saturate(110%);
+  -webkit-backdrop-filter: blur(12px) saturate(110%);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: none;
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Edge Highlight (kaum sichtbar im Default) */
+.liquid-glass-hover::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.6) 0%,
+    rgba(255, 255, 255, 0.3) 20%,
+    rgba(200, 220, 255, 0.2) 40%,
+    rgba(255, 200, 220, 0.15) 60%,
+    rgba(255, 255, 255, 0.1) 80%,
+    rgba(255, 255, 255, 0.3) 100%
+  );
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  z-index: 2;
+  opacity: 0.15;
+  transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Inner Glow (kaum sichtbar im Default) */
+.liquid-glass-hover::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 50%;
+  border-radius: inherit;
+  border-bottom-left-radius: 100% 20px;
+  border-bottom-right-radius: 100% 20px;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.2) 0%,
+    rgba(255, 255, 255, 0.05) 50%,
+    transparent 100%
+  );
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.2;
+  transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.liquid-glass-hover > * {
+  position: relative;
+  z-index: 3;
+}
+
+.liquid-glass-hover:hover {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.15) 0%,
+    rgba(255, 255, 255, 0.08) 50%,
+    rgba(255, 255, 255, 0.12) 100%
+  );
+  backdrop-filter: blur(40px) saturate(180%) brightness(1.1);
+  -webkit-backdrop-filter: blur(40px) saturate(180%) brightness(1.1);
+  border-color: rgba(255, 255, 255, 0.25);
+  box-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.4),
+    inset 1px 0 1px rgba(255, 255, 255, 0.2),
+    inset 0 -1px 2px rgba(0, 0, 0, 0.1),
+    0 0 20px rgba(255, 255, 255, 0.15),
+    0 8px 32px rgba(0, 0, 0, 0.2);
+  transform: translateY(-2px);
+}
+
+.liquid-glass-hover:hover::before {
+  opacity: 1;
+}
+
+.liquid-glass-hover:hover::after {
+  opacity: 1;
+}
+
+.liquid-glass-hover:active {
+  transform: scale(0.98);
+  transition: all 0.1s cubic-bezier(0.42, 0, 1, 1);
+}
+
+/* Liquid Glass Input - für Formulare */
+.liquid-glass-input {
+  position: relative;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.08) 0%,
+    rgba(255, 255, 255, 0.04) 100%
+  );
+  backdrop-filter: blur(24px) saturate(150%) brightness(1.02);
+  -webkit-backdrop-filter: blur(24px) saturate(150%) brightness(1.02);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow:
+    0 0 0 0.5px rgba(255, 255, 255, 0.1) inset,
+    0 2px 4px rgba(0, 0, 0, 0.08) inset;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: backdrop-filter;
+}
+
+.liquid-glass-input::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.1) 0%,
+    rgba(255, 255, 255, 0.02) 100%
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+.liquid-glass-input:hover {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.12) 0%,
+    rgba(255, 255, 255, 0.06) 100%
+  );
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow:
+    0 0 0 0.5px rgba(255, 255, 255, 0.15) inset,
+    0 2px 4px rgba(0, 0, 0, 0.06) inset;
+}
+
+.liquid-glass-input:focus {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.15) 0%,
+    rgba(255, 255, 255, 0.08) 100%
+  );
+  border-color: rgba(255, 255, 255, 0.35);
+  box-shadow:
+    0 0 0 3px rgba(255, 255, 255, 0.1),
+    0 0 0 0.5px rgba(255, 255, 255, 0.3) inset,
+    0 2px 4px rgba(0, 0, 0, 0.05) inset;
+  outline: none;
+}
+
+/* Heavy Overlay Variant - für Mobile Menu etc. */
+.liquid-glass-overlay {
+  position: relative;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.7) 0%,
+    rgba(0, 0, 0, 0.85) 100%
+  );
+  backdrop-filter: blur(60px) saturate(200%) brightness(0.8);
+  -webkit-backdrop-filter: blur(60px) saturate(200%) brightness(0.8);
+  border: none;
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.1) inset,
+    0 -1px 0 rgba(255, 255, 255, 0.15) inset;
+}
+
+/* Text Vibrancy auf Liquid Glass */
+.liquid-glass *,
+.liquid-glass-hover * {
+  position: relative;
+  z-index: 2;
+}
+
+/* Disabled State */
+.liquid-glass:disabled,
+.liquid-glass-hover:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none !important;
+  backdrop-filter: blur(20px) saturate(100%);
+  -webkit-backdrop-filter: blur(20px) saturate(100%);
+}
+
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  .liquid-glass,
+  .liquid-glass-hover,
+  .liquid-glass-input,
+  .liquid-glass-overlay {
+    transition: opacity 0.2s ease !important;
+  }
+
+  .liquid-glass:hover,
+  .liquid-glass-hover:hover,
+  .liquid-glass:active {
+    transform: none !important;
+  }
+}
+
+/* ============================================
+   BROWSER FALLBACKS
+   ============================================ */
+
+/* Fallback wenn backdrop-filter nicht unterstützt wird */
+@supports not (backdrop-filter: blur(1px)) {
+  .liquid-glass,
+  .liquid-glass-hover:hover {
+    background: rgba(255, 255, 255, 0.85);
+    border-color: rgba(255, 255, 255, 0.5);
+  }
+
+  .liquid-glass-input {
+    background: rgba(30, 30, 30, 0.9);
+  }
+
+  .liquid-glass-overlay {
+    background: rgba(0, 0, 0, 0.95);
+  }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  /* Behalte nur kritische Transitions */
+  button:active {
+    transition-duration: 0.1s !important;
+  }
+}
+
+/* ============================================
+   MOBILE UTILITIES
+   ============================================ */
+
+/* Dynamic Viewport Height - uses CSS dvh with fallback */
+.h-screen-dynamic {
+  height: 100vh;
+  height: 100dvh;
+}
+
+.min-h-screen-dynamic {
+  min-height: 100vh;
+  min-height: 100dvh;
 }
