@@ -136,6 +136,7 @@ export default function Home() {
   const [isDarkMode, setIsDarkMode] = useState(true);
   const [showWeiterPulse, setShowWeiterPulse] = useState(false);
   const [scrollUnlocked, setScrollUnlocked] = useState(false); // Initially locked, unlocked after "Weiter" click
+  const [hasInteracted, setHasInteracted] = useState(false); // Track if user has spawned images (tried to scroll)
   const [globalHoveredProject, setGlobalHoveredProject] = useState<number | null>(null); // Für globale Kachel-Hover
 
   // Contact form state
@@ -647,12 +648,17 @@ export default function Home() {
         return updated.slice(-6);
       });
 
+      // Mark that user has interacted (tried to scroll/swipe)
+      if (!hasInteracted) {
+        setHasInteracted(true);
+      }
+
       const lifetime = isMobile ? IMAGE_LIFETIME_MOBILE : IMAGE_LIFETIME_DESKTOP;
       setTimeout(() => {
         setHoverImages((prev) => prev.filter((img) => img.id !== newImage.id));
       }, lifetime + FADE_OUT_DURATION);
     },
-    [isInNoSpawnZone, isInWeiterButtonZone, isInHeroSection, isMobile, hoverImages.length]
+    [isInNoSpawnZone, isInWeiterButtonZone, isInHeroSection, isMobile, hoverImages.length, hasInteracted]
   );
 
   // Handle mouse move for cursor position and images (Desktop only)
@@ -888,9 +894,9 @@ export default function Home() {
           id="home"
           className="w-full relative"
           style={{
-            // Mobile: 110% of viewport height, Desktop: exactly viewport height
-            minHeight: isMobile ? "110dvh" : "100vh",
-            height: isMobile ? "110dvh" : "100vh",
+            // Mobile: 120% of viewport height, Desktop: exactly viewport height
+            minHeight: isMobile ? "120dvh" : "100vh",
+            height: isMobile ? "120dvh" : "100vh",
             overflow: "visible",
           }}
           onTouchStart={handleHeroTouchStart}
@@ -995,12 +1001,12 @@ export default function Home() {
             </h1>
           </div>
 
-          {/* Weiter Button - always visible on mobile, conditional on desktop */}
-          {(isMobile || !scrollUnlocked) && (
+          {/* Weiter Button - shows after user interaction on mobile, or when scroll locked on desktop */}
+          {((isMobile && hasInteracted && !scrollUnlocked) || (!isMobile && !scrollUnlocked)) && (
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ delay: 1, duration: 0.8 }}
+              transition={{ delay: 0.3, duration: 0.5 }}
               className="absolute left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
               style={{
                 zIndex: 40,
